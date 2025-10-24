@@ -1,4 +1,4 @@
-let playerScore = 0;
+let humanScore = 0;
 let computerScore = 0;
 
 function getComputerChoice() {
@@ -24,7 +24,7 @@ function playRound(humanChoice, computerChoice) {
     console.log(
       `The human is the winner! ${humanChoice} beats ${computerChoice}`,
     );
-    playerScore++;
+    humanScore++;
   } else {
     console.log(
       `The computer is the winner! ${computerChoice} beats ${humanChoice}`,
