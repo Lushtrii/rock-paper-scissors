@@ -40,8 +40,20 @@ function updateScoreState(scoreState, winner) {
   }
 }
 
-function updateDisplayedScore(resultsDiv, scoreState) {
+function updateDisplayedScore(scoreState) {
+  const resultsDiv = document.querySelector("#results");
   resultsDiv.textContent = `Human score: ${scoreState.humanScore} Computer score: ${scoreState.computerScore}`;
+}
+
+function createChoiceButton(choice, scoreState) {
+  const button = document.createElement("button");
+  button.textContent = choice;
+  button.addEventListener("click", () => {
+    const result = playRound(choice, getComputerChoice());
+    updateScoreState(scoreState, result);
+    updateDisplayedScore(scoreState);
+  });
+  return button;
 }
 
 function playGame() {
@@ -50,38 +62,19 @@ function playGame() {
     computerScore: 0,
   };
 
-  const rockButton = document.createElement("button");
-  rockButton.textContent = "Rock";
-  const paperButton = document.createElement("button");
-  paperButton.textContent = "Paper";
-  const scissorsButton = document.createElement("button");
-  scissorsButton.textContent = "Scissors";
+  const rockButton = createChoiceButton("Rock", scoreState);
+  const paperButton = createChoiceButton("Paper", scoreState);
+  const scissorsButton = createChoiceButton("Scissors", scoreState);
 
   const resultsDiv = document.createElement("div");
-  updateDisplayedScore(resultsDiv, scoreState);
-
-  rockButton.addEventListener("click", () => {
-    const result = playRound("Rock", getComputerChoice());
-    updateScoreState(scoreState, result);
-    updateDisplayedScore(resultsDiv, scoreState);
-  });
-  paperButton.addEventListener("click", () => {
-    const result = playRound("Paper", getComputerChoice());
-    updateScoreState(scoreState, result);
-    updateDisplayedScore(resultsDiv, scoreState);
-  });
-  scissorsButton.addEventListener("click", () => {
-    const result = playRound("Scissors", getComputerChoice());
-    updateScoreState(scoreState, result);
-    updateDisplayedScore(resultsDiv, scoreState);
-  });
+  resultsDiv.id = "results";
 
   const bodyElem = document.querySelector("body");
   bodyElem.appendChild(rockButton);
   bodyElem.appendChild(paperButton);
   bodyElem.appendChild(scissorsButton);
-
   bodyElem.appendChild(resultsDiv);
+  updateDisplayedScore(scoreState);
 }
 
 playGame();
