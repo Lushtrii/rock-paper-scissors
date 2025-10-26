@@ -32,13 +32,23 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
-function updateScore(resultsDiv, humanScore, computerScore) {
-  resultsDiv.textContent = `Human score: ${humanScore} Computer score: ${computerScore}`;
+function updateScoreState(scoreState, winner) {
+  if (winner === "human") {
+    scoreState.humanScore++;
+  } else if (winner === "computer") {
+    scoreState.computerScore++;
+  }
+}
+
+function updateDisplayedScore(resultsDiv, scoreState) {
+  resultsDiv.textContent = `Human score: ${scoreState.humanScore} Computer score: ${scoreState.computerScore}`;
 }
 
 function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
+  const scoreState = {
+    humanScore: 0,
+    computerScore: 0,
+  };
 
   const rockButton = document.createElement("button");
   rockButton.textContent = "Rock";
@@ -48,34 +58,22 @@ function playGame() {
   scissorsButton.textContent = "Scissors";
 
   const resultsDiv = document.createElement("div");
-  updateScore(resultsDiv, humanScore, computerScore);
+  updateDisplayedScore(resultsDiv, scoreState);
 
   rockButton.addEventListener("click", () => {
     const result = playRound("Rock", getComputerChoice());
-    if (result === "human") {
-      humanScore++;
-    } else if (result === "computer") {
-      computerScore++;
-    }
-    updateScore(resultsDiv, humanScore, computerScore);
+    updateScoreState(scoreState, result);
+    updateDisplayedScore(resultsDiv, scoreState);
   });
   paperButton.addEventListener("click", () => {
     const result = playRound("Paper", getComputerChoice());
-    if (result === "human") {
-      humanScore++;
-    } else if (result === "computer") {
-      computerScore++;
-    }
-    updateScore(resultsDiv, humanScore, computerScore);
+    updateScoreState(scoreState, result);
+    updateDisplayedScore(resultsDiv, scoreState);
   });
   scissorsButton.addEventListener("click", () => {
     const result = playRound("Scissors", getComputerChoice());
-    if (result === "human") {
-      humanScore++;
-    } else if (result === "computer") {
-      computerScore++;
-    }
-    updateScore(resultsDiv, humanScore, computerScore);
+    updateScoreState(scoreState, result);
+    updateDisplayedScore(resultsDiv, scoreState);
   });
 
   const bodyElem = document.querySelector("body");
