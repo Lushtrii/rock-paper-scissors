@@ -32,6 +32,10 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
+function updateScore(resultsDiv, humanScore, computerScore) {
+  resultsDiv.textContent = `Human score: ${humanScore} Computer score: ${computerScore}`;
+}
+
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
@@ -43,6 +47,9 @@ function playGame() {
   const scissorsButton = document.createElement("button");
   scissorsButton.textContent = "Scissors";
 
+  const resultsDiv = document.createElement("div");
+  updateScore(resultsDiv, humanScore, computerScore);
+
   rockButton.addEventListener("click", () => {
     const result = playRound("Rock", getComputerChoice());
     if (result === "human") {
@@ -50,6 +57,7 @@ function playGame() {
     } else if (result === "computer") {
       computerScore++;
     }
+    updateScore(resultsDiv, humanScore, computerScore);
   });
   paperButton.addEventListener("click", () => {
     const result = playRound("Paper", getComputerChoice());
@@ -58,6 +66,7 @@ function playGame() {
     } else if (result === "computer") {
       computerScore++;
     }
+    updateScore(resultsDiv, humanScore, computerScore);
   });
   scissorsButton.addEventListener("click", () => {
     const result = playRound("Scissors", getComputerChoice());
@@ -66,12 +75,15 @@ function playGame() {
     } else if (result === "computer") {
       computerScore++;
     }
+    updateScore(resultsDiv, humanScore, computerScore);
   });
 
   const bodyElem = document.querySelector("body");
   bodyElem.appendChild(rockButton);
   bodyElem.appendChild(paperButton);
   bodyElem.appendChild(scissorsButton);
+
+  bodyElem.appendChild(resultsDiv);
 }
 
 playGame();
